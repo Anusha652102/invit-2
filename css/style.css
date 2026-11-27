@@ -1,0 +1,180 @@
+/* VOICE: confident civic banking launch — clean, bright, trustworthy
+   IDEA: the two logos set the palette: Flex navy and BOC gold, lit by the Flex cyan
+   PICTURE: lotus mandala behind the title, the Commissioner's video in a gold-and-navy arch, ola-leaf event card
+   COLOUR and TYPE: cool white #f3f7fc, Flex navy #0e3a5c, BOC gold #f2b705, cyan accent #22c9f0; Flex gradient only on "Flex"
+   LAYOUT: Hero → Video → Ceremony → Countdown → Message */
+:root {
+  color-scheme: light;
+  --clay: #f3f7fc;
+  --paper: #ffffff;
+  --red: #0e3a5c;
+  --red2: #07223a;
+  --gold: #f2b705;
+  --gold2: #c99400;
+  --ink: #0b1b2b;
+  --soft: #566a7f;
+  --line: rgba(14, 58, 92, 0.18);
+}
+* { box-sizing: border-box; min-width: 0; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; overflow-x: clip; scroll-padding-top: 24px; }
+body {
+  margin: 0;
+  background: var(--clay);
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(242, 183, 5, 0.14), transparent 40%),
+    radial-gradient(circle at 85% 60%, rgba(14, 58, 92, 0.08), transparent 45%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font: 16px/1.65 "DM Sans", "Noto Serif Sinhala", sans-serif;
+  overflow-x: clip;
+}
+.si { font-family: "Noto Serif Sinhala", serif; }
+.sr { position: absolute; left: -9999px; }
+img { max-width: 100%; }
+
+.bar { position: fixed; top: 0; left: 0; height: 4px; z-index: 60; background: linear-gradient(90deg, #22c9f0, var(--gold)); transition: width 0.1s; }
+/* liyapatha-style border band (CSS pattern, original) */
+.liya { position: fixed; left: 0; right: 0; height: 10px; z-index: 5; pointer-events: none;
+  background:
+    radial-gradient(circle at 10px 5px, var(--gold) 2.5px, transparent 3px) 0 0 / 20px 10px,
+    linear-gradient(var(--red), var(--red)); }
+.liya.top { top: 4px; }
+.fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 55; }
+
+/* ---------- buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 12px 24px; border-radius: 999px; border: 0; cursor: pointer; font: 700 16px "DM Sans", "Noto Serif Sinhala", sans-serif; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+.btn:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.btn svg { width: 20px; height: 20px; }
+.btn:hover { transform: translateY(-2px); }
+.btn-gold { background: linear-gradient(180deg, #ffd64d, var(--gold) 55%, var(--gold2)); color: #2b1a05; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25); animation: pulse 2.2s infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 14px rgba(242, 183, 5, 0), 0 10px 26px rgba(0, 0, 0, 0.25); } }
+.btn-red { background: linear-gradient(180deg, #16507f, var(--red)); color: #fff; box-shadow: 0 10px 24px rgba(14, 58, 92, 0.3); }
+.btn-line { background: var(--paper); color: var(--red); border: 1.5px solid var(--red); }
+
+/* ---------- layout ---------- */
+main { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding: 0 16px 90px; }
+section { padding: 64px 0 0; }
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.reveal.in { opacity: 1; transform: none; }
+main:not(.opened) .reveal { opacity: 0; transform: translateY(26px); }
+.head { text-align: center; margin-bottom: 22px; }
+.head h2 { margin: 8px 0 4px; font: 700 clamp(32px, 7vw, 42px)/1.1 "Cormorant Garamond", serif; color: var(--red); }
+.head p { margin: 0; color: var(--soft); }
+.orn { display: block; width: 120px; height: 14px; margin: 0 auto;
+  background: radial-gradient(circle, var(--gold) 3px, transparent 3.5px) center / 14px 14px no-repeat,
+    linear-gradient(90deg, transparent, var(--gold) 40%, transparent 41%, transparent 59%, var(--gold) 60%, transparent) center / 100% 1.5px no-repeat; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; text-align: center; min-height: 100vh; min-height: 100svh; padding-top: 56px; padding-bottom: 56px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+/* first screen is locked until the video button is pressed */
+html.lock, html.lock body { overflow: hidden; height: 100%; overscroll-behavior: none; }
+/* hero background photo: full width, light veil so the navy text stays readable, slow zoom */
+.hero-photo { position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); z-index: -1; overflow: hidden; }
+.hero-photo::before { content: ""; position: absolute; inset: 0; background: var(--photo) center / cover no-repeat; animation: zoom 30s ease-in-out infinite alternate; }
+.hero-photo::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(5, 20, 36, 0.72) 0%, rgba(5, 20, 36, 0.6) 50%, rgba(5, 20, 36, 0.5) 100%), linear-gradient(180deg, rgba(5, 20, 36, 0.35), rgba(5, 20, 36, 0.15) 60%, rgba(5, 20, 36, 0.4)); }
+/* dark photo → light text on the first screen */
+.hero.dark .kicker { color: #ffd64d; }
+.hero.dark .crests b { color: #ffd64d; }
+.hero.dark h1 { color: #fff; text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45); }
+.hero.dark .sub.si { color: #fff; }
+.hero.dark .sub.en { color: #d6e4f2; }
+.hero.dark .dear { color: #ffd64d; }
+.hero.dark .flex { filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.35)); }
+.hero.dark .photo-credit { background: rgba(0, 0, 0, 0.45); color: #e6eef8; }
+@keyframes zoom { from { transform: scale(1); } to { transform: scale(1.03); } }
+.hero-photo-fit { display: none; }
+/* tall screens (phones): show the whole photo, with a soft blurred copy filling the rest */
+@media (max-aspect-ratio: 1/1) {
+  .hero-photo::before { inset: -40px; filter: blur(18px) saturate(1.1); animation: none; }
+  .hero-photo-fit { display: block; position: absolute; left: 0; right: 0; bottom: 0; aspect-ratio: 3 / 2; transform-origin: 50% 100%; background: var(--photo) center bottom / contain no-repeat; -webkit-mask-image: linear-gradient(transparent, #000 22%); mask-image: linear-gradient(transparent, #000 22%); animation: zoom 30s ease-in-out infinite alternate; }
+}
+.photo-credit { position: absolute; left: 12px; bottom: 10px; margin: 0; font-size: 11px; color: var(--soft); background: rgba(255, 255, 255, 0.7); padding: 2px 8px; border-radius: 6px; }
+.hero .dear { margin: 22px 0 0; font: italic 600 22px "Cormorant Garamond", serif; color: var(--red); }
+.hero-cta { margin: 24px 0 0; }
+.hero-cta .btn svg { width: 18px; height: 18px; }
+.hero-lotus { position: absolute; left: 50%; top: 50%; width: min(560px, 120vw); height: auto; transform: translate(-50%, -50%); z-index: -1; opacity: 0.5; animation: spin2 80s linear infinite; }
+@keyframes spin2 { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.hero-lotus .p1 { fill: rgba(242, 183, 5, 0.12); stroke: rgba(242, 183, 5, 0.5); }
+.hero-lotus .p2 { fill: rgba(14, 58, 92, 0.07); stroke: rgba(14, 58, 92, 0.3); }
+.hero-lotus .p3 { fill: rgba(242, 183, 5, 0.2); stroke: var(--gold); }
+.hero-lotus .ln { fill: none; stroke: rgba(201, 148, 0, 0.45); }
+.hero-lotus .dash { stroke-dasharray: 2 4; }
+.hero-lotus .core { fill: rgba(242, 183, 5, 0.35); }
+.crests { display: flex; justify-content: center; align-items: center; gap: 16px; }
+.crests span { background: #fff; border-radius: 20px; padding: 10px 14px; border: 2px solid var(--gold); box-shadow: 0 14px 30px rgba(10, 40, 70, 0.15); }
+.crests img { display: block; height: clamp(64px, 15vw, 90px); width: auto; }
+.crests b { font: 700 28px "Cormorant Garamond"; color: var(--red); }
+.kicker { margin: 24px 0 0; color: var(--red); font-weight: 700; }
+.hero h1 { margin: 6px 0 0; font: 700 clamp(46px, 12vw, 78px)/0.98 "Cormorant Garamond", serif; text-wrap: balance; }
+.flex { background: linear-gradient(90deg, #ff3d97, #8a5cff 50%, #22c9f0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sub { margin: 10px 0 0; font-size: 18px; }
+.sub.en { margin-top: 0; color: var(--soft); font: italic 500 21px "Cormorant Garamond", serif; }
+.datestrip { display: inline-flex; align-items: center; gap: 18px; margin: 26px 0 0; padding: 14px 24px; background: var(--paper); border-radius: 18px; border: 1px solid var(--line); box-shadow: 0 14px 30px rgba(10, 40, 70, 0.1); }
+.datestrip small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--soft); }
+.datestrip b { display: block; font: 700 30px/1.05 "Cormorant Garamond"; color: var(--red); }
+.datestrip i { width: 1px; align-self: stretch; background: var(--line); }
+
+/* ---------- video ---------- */
+.frame { padding: 6px; border-radius: 22px; background: linear-gradient(160deg, #ffe27a, var(--gold) 45%, var(--gold2) 75%, #ffd64d); box-shadow: 0 30px 60px rgba(10, 40, 70, 0.22); }
+.frame-in { position: relative; overflow: hidden; border-radius: 17px; aspect-ratio: 16 / 9; background: var(--red2); }
+.frame-in.tall { aspect-ratio: 9 / 16; max-height: 80vh; margin: 0 auto; }
+.frame-in video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
+.ph { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 28px; color: #fff3dc;
+  background: radial-gradient(70% 60% at 50% 45%, #16507f, var(--red2)),
+    repeating-linear-gradient(45deg, transparent 0 16px, rgba(255, 255, 255, 0.04) 16px 17px); }
+.ph p { margin: 14px 0 0; }
+.play { width: 80px; height: 80px; margin: 0 auto; border-radius: 50%; display: grid; place-items: center; border: 0; cursor: pointer; color: #2b1a05; background: radial-gradient(circle at 35% 30%, #fff3b8, var(--gold) 55%, var(--gold2)); box-shadow: 0 0 40px rgba(255, 214, 77, 0.6); }
+.play.big { position: absolute; inset: 0; margin: auto; }
+
+/* ---------- ceremony (ola-leaf card) ---------- */
+.olacard { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 0; border-radius: 22px; overflow: hidden; background: linear-gradient(180deg, #fffaf0, #eaf2fb); border: 1px solid rgba(201, 148, 0, 0.35); box-shadow: 0 24px 50px rgba(10, 40, 70, 0.14); }
+.ola-date { display: grid; place-content: center; text-align: center; color: #fff; background: linear-gradient(180deg, #16507f, var(--red2)); padding: 16px 8px; }
+.ola-date small { font-weight: 700; letter-spacing: 0.1em; font-size: 12px; color: #ffd64d; }
+.ola-date b { font: 700 52px/1 "Cormorant Garamond"; }
+.ola-date span { font-size: 13px; }
+.ola-body { padding: 20px 22px; background: repeating-linear-gradient(180deg, transparent 0 31px, rgba(201, 148, 0, 0.12) 31px 32px); }
+.ola-body h3 { margin: 0 0 10px; font: 700 25px/1.15 "Cormorant Garamond", serif; color: var(--red); }
+.meta { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.meta > li { display: flex; gap: 10px; align-items: flex-start; }
+.meta svg { flex: none; width: 20px; height: 20px; color: var(--gold2); margin-top: 3px; }
+.meta span { display: block; color: var(--soft); font-size: 14px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 22px 0 0; }
+@media (max-width: 460px) {
+  .olacard { grid-template-columns: minmax(0, 1fr); }
+  .ola-date { grid-auto-flow: column; gap: 12px; align-items: center; }
+  .ola-date b { font-size: 40px; }
+}
+
+/* ---------- countdown ---------- */
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.tile { text-align: center; padding: 14px 4px 12px; border-radius: 18px; background: linear-gradient(180deg, #16507f, var(--red2)); color: #fff; box-shadow: 0 14px 28px rgba(14, 58, 92, 0.25), inset 0 -3px 0 rgba(0, 0, 0, 0.2); position: relative; overflow: hidden; }
+.tile::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0, 0, 0, 0.25); }
+.tile b { display: block; font: 700 clamp(28px, 8vw, 42px)/1.1 "Cormorant Garamond"; color: #ffd64d; font-variant-numeric: tabular-nums; }
+.tile .flip { animation: flip 0.5s ease; }
+@keyframes flip { from { transform: rotateX(80deg); opacity: 0.3; } to { transform: none; opacity: 1; } }
+.tile span { display: block; font-size: 13px; }
+.tile small { display: block; font-size: 11px; opacity: 0.75; }
+.done { text-align: center; font: 700 24px "Cormorant Garamond"; color: var(--red); }
+
+/* ---------- message ---------- */
+.parch { position: relative; overflow: hidden; text-align: center; padding: clamp(26px, 6vw, 44px); border-radius: 24px; background: linear-gradient(180deg, #fffaf0, #e3edf8); border: 1px solid rgba(201, 148, 0, 0.4); box-shadow: 0 24px 50px rgba(10, 40, 70, 0.14); }
+.parch-lotus { position: absolute; right: -60px; bottom: -60px; width: 220px; opacity: 0.35; }
+.parch-lotus .p1, .parch-lotus .p2, .parch-lotus .p3 { fill: rgba(242, 183, 5, 0.25); stroke: var(--gold); }
+.parch-lotus .ln { fill: none; stroke: var(--gold); }
+.parch-lotus .core { fill: var(--gold); }
+.parch blockquote { position: relative; margin: 0; font: italic 600 clamp(21px, 5vw, 25px)/1.45 "Cormorant Garamond", serif; }
+.parch .si { position: relative; margin: 14px 0 0; color: var(--soft); font-size: 15px; line-height: 1.8; }
+.sign { position: relative; margin: 18px 0 0; font-weight: 700; color: var(--red); }
+.sign span { display: block; color: var(--soft); font-weight: 400; font-size: 14px; }
+footer { text-align: center; margin: 36px 0 0; color: var(--soft); font-size: 13px; }
+
+.music { position: fixed; right: 16px; bottom: 16px; z-index: 56; width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--gold); background: var(--red); color: #ffd64d; display: grid; place-items: center; cursor: pointer; box-shadow: 0 10px 24px rgba(14, 58, 92, 0.35); }
+.music.on { animation: pulse 2.2s infinite; }
+.music svg { width: 22px; height: 22px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
